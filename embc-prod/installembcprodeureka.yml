@@ -1,0 +1,29 @@
+---
+ - hosts: all
+   user: ubuntu
+   
+
+   tasks:
+
+    #- script: /var/lib/awx/projects/embc/removedocker.sh
+
+    
+    - command: sudo sh -c "sudo docker stop $(sudo docker ps -a -q)"
+      register: result
+      ignore_errors: True
+
+    
+    - command: sudo sh -c "sudo docker rm $(sudo docker ps -a -q)"
+      ignore_errors: True
+      when: result|success
+
+    
+    - command: sudo sh -c "sudo docker rmi $(sudo docker images -q)"
+      ignore_errors: True
+      when: result|success
+
+    - name: EMBC download image and launch container
+      command: sudo docker run -e "EUREKA_CLIENT_REGISTERWITHEUREKA=false" -e "EUREKA_CLIENT_FETCHREGISTRY=false"  --name eureka -p 8761:8080 -d netflixoss/eureka:1.1.147
+
+
+

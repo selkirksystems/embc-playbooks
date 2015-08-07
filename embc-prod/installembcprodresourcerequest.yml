@@ -1,0 +1,27 @@
+---
+ - hosts: all
+   user: ubuntu
+   
+
+   tasks:
+
+    
+    - command: sudo sh -c "sudo docker stop $(sudo docker ps -a -q)"
+      register: result
+      ignore_errors: True
+
+    
+    - command: sudo sh -c "sudo docker rm $(sudo docker ps -a -q)"
+      ignore_errors: True
+      when: result|success
+
+    
+    - command: sudo sh -c "sudo docker rmi $(sudo docker images -q)"
+      ignore_errors: True
+      when: result|success
+
+    - name: EMBC download image and launch container
+      command: sudo sh -c "sudo docker run -h $(ifconfig eth0 | grep 'inet addr:' | cut '-d:' -f2 | awk '{print $1}') --name resourcerequestservice -p 8080:8080 -e "spring.profiles.active=amazon" -d selkirksystems/embc-resourcerequest:0.1.2"
+
+
+

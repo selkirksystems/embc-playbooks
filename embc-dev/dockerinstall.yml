@@ -1,0 +1,21 @@
+---
+ - hosts: all
+   user: ubuntu
+
+   tasks:
+
+
+    - name: Command line docker install
+      command: sudo sh -c "wget -qO- https://get.docker.io/gpg | apt-key add -"
+
+    - name: set up repo
+      command: sudo sh -c "echo deb http://get.docker.io/ubuntu docker main\ > /etc/apt/sources.list.d/docker.list"
+
+    - name: update 
+      command: sudo aptitude update
+      
+    - name: install
+      command: sudo aptitude install -y lxc-docker
+
+
+

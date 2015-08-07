@@ -1,0 +1,10 @@
+---
+- name: Test
+  hosts: all
+  user: ubuntu
+
+  tasks:
+
+  - name: echo test
+    shell: echo "Hey hey momma can you sing the blues"
+
