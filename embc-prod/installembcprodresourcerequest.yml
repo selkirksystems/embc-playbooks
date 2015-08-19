@@ -21,7 +21,7 @@
       when: result|success
 
     - name: EMBC download image and launch container
-      command: sudo sh -c "sudo docker run -h $(ifconfig eth0 | grep 'inet addr:' | cut '-d:' -f2 | awk '{print $1}') --name resourcerequestservice -p 8080:8080 -e "spring.profiles.active=amazon" -d selkirksystems/embc-resourcerequest:0.1.2"
+      command: sudo sh -c "sudo docker run -h $(ifconfig eth0 | grep 'inet addr:' | cut '-d:' -f2 | awk '{print $1}') --name resourcerequestservice -p 8080:8080 -e "spring.profiles.active=amazon" -d selkirksystems/embc-resourcerequest:0.1.4"
 
 
 

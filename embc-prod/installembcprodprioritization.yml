@@ -23,7 +23,7 @@
       when: result|success
 
     - name: EMBC download image and launch container
-      command: sudo docker run --name requestprioritizationservice -e "spring.profiles.active=amazon" -d selkirksystems/embc-requestprioritization:0.1.1
+      command: sudo docker run --name requestprioritizationservice -e "spring.profiles.active=amazon" -d selkirksystems/embc-requestprioritization:0.1.4
 
 
 
