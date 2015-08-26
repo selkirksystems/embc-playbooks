@@ -5,25 +5,28 @@
 
    tasks:
 
-    #- script: /var/lib/awx/projects/embc/removedocker.sh
+    - name: Pull new image
+      command: sudo sh -c "sudo docker pull {{newimage}}"
+      ignore_errors: True
 
-    
-    - command: sudo sh -c "sudo docker stop $(sudo docker ps -a -q)"
+    - name: Stop old container
+      command: sudo sh -c "sudo docker stop $(sudo docker ps -a -q)"
       register: result
       ignore_errors: True
 
-    
-    - command: sudo sh -c "sudo docker rm $(sudo docker ps -a -q)"
+    - name: Remove old container
+      command: sudo sh -c "sudo docker rm $(sudo docker ps -a -q)"
       ignore_errors: True
       when: result|success
 
-    
-    - command: sudo sh -c "sudo docker rmi $(sudo docker images -q)"
+
+    - name: Remove old image
+      command: sudo sh -c "sudo docker rmi {{oldimage}}"
       ignore_errors: True
       when: result|success
 
-    - name: EMBC download image and launch container
-      command: sudo docker run -d -p 80:8080 --name embcweb -e "spring.profiles.active=amazon" selkirksystems/embc-web:0.0.9
+    - name: Launch new container
+      command: sudo docker run -d -p {{ports}} --name embcweb -e "spring.profiles.active=amazon" {{newimage}}
 
 
 
