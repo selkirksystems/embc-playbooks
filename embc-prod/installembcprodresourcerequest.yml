@@ -24,9 +24,6 @@
       command: sudo sh -c "sudo docker rmi {{oldimage}}"
       ignore_errors: True
       when: result|success
-	  
+
     - name: Launch new container
-      command: sudo sh -c "sudo docker run -h $(ifconfig eth0 | grep 'inet addr:' | cut '-d:' -f2 | awk '{print $1}') --name resourcerequestservice -p {{ports}} -e "spring.profiles.active=amazon" -d {{newimage}}"
-
-
-
+      command: sudo docker run -d -p {{ports}} --name embcweb -e "spring.profiles.active=amazon" {{newimage}}
