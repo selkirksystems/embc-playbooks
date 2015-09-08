@@ -14,7 +14,7 @@
       ignore_errors: True
 
 
-    - Remove old container
+    - name: remove old container
       command: sudo sh -c "sudo docker rm $(sudo docker ps -a -q)"
       ignore_errors: True
       when: result|success
