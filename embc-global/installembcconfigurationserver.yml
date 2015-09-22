@@ -26,7 +26,7 @@
       when: result|success
 
     - name: EMBC download image and launch container
-      command: sudo docker run --name configurationservice -e "spring.profiles.active={{profiles}}" -e "security.user.password={{configServerPassword}}" -p {{ports}} -d {{newimage}}
+      command: sudo docker run --name configurationservice -e "spring.profiles.active={{profiles}}" -e "security.user.password={{configServerPassword}}" -e "spring.svn.password={{subversionPassword}}" -p {{ports}} -d {{newimage}}
 
 
 
