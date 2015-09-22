@@ -9,25 +9,24 @@
       command: sudo sh -c "sudo docker pull {{newimage}}"
       ignore_errors: True
 
-    
     - name: Stop old container
       command: sudo sh -c "sudo docker stop $(sudo docker ps -a -q)"
       register: result
       ignore_errors: True
-    
+
     - name: Remove old container
       command: sudo sh -c "sudo docker rm $(sudo docker ps -a -q)"
       ignore_errors: True
       when: result|success
- 
+
+
     - name: Remove old image
       command: sudo sh -c "sudo docker rmi {{oldimage}}"
       ignore_errors: True
       when: result|success
 
-    - name: EMBC download image and launch container
-      command: sudo docker run -p {{ports}} --name apigateway -e "spring.profiles.active=amazon" -d {{newimage}}
-
+    - name: Launch new container
+      command: sudo docker run -d -p {{ports}} --name embcweb -e "spring.profiles.active=amazon" {{newimage}}
 
 
 
