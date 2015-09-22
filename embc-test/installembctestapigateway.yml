@@ -26,7 +26,7 @@
       when: result|success
 
     - name: EMBC download image and launch container
-      command: sudo docker run -p {{ports}} --name apigateway -e "spring.profiles.active=amazon" -d {{newimage}}
+      command: sudo docker run -p {{ports}} --name apigateway -e "spring.profiles.active=test" -d {{newimage}}
 
 
 
