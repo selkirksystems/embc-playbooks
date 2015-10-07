@@ -26,4 +26,4 @@
       when: result|success
 
     - name: Launch new container
-      command: sudo sh -c "sudo docker run -d -h $(ifconfig eth0 | grep 'inet addr:' | cut '-d:' -f2 | awk '{print $1}') --name resourcerequestservice -p {{ports}} -e "spring.profiles.active=test" {{newimage}}"
+      command: sudo sh -c "sudo docker run -d -h $(ifconfig eth0 | grep 'inet addr:' | cut '-d:' -f2 | awk '{print $1}') --name resourcerequestservice -p {{ports}} -p {{ports2}} -e "spring.cloud.config.password=P@ssw0rd" -e "spring.profiles.active=test" {{newimage}}"
