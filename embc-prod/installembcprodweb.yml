@@ -5,6 +5,10 @@
 
    tasks:
 
+    - name: Pull new image
+      command: sudo sh -c "sudo docker pull {{newimage}}"
+      ignore_errors: True
+
     - name: Stop old container
       command: sudo sh -c "sudo docker stop $(sudo docker ps -a -q)"
       register: result
@@ -19,10 +23,6 @@
       command: sudo sh -c "sudo docker rmi $(sudo docker images -q)"
       ignore_errors: True
       when: result|success
-
-    - name: Pull new image
-      command: sudo sh -c "sudo docker pull {{newimage}}"
-      ignore_errors: True
 
     - name: Launch new container
       command: sudo docker run -d -p {{ports}} --name embcweb -e "spring.profiles.active=amazon,request" -e "spring.cloud.config.password={{configServerPassword}}" {{newimage}}
