@@ -20,7 +20,7 @@
       when: result|success
 
     - name: Remove old image
-      command: sudo sh -c "sudo docker rmi $(sudo docker images -q)"
+      command: sudo sh -c "sudo docker rmi {{oldimage}}"
       ignore_errors: True
       when: result|success
 
