@@ -25,4 +25,4 @@
       when: result|success
 
     - name: Launch new container
-      command: sudo docker run -d -p {{ports}} --name embcweb -e "spring.profiles.active=amazon,request" -e "spring.cloud.config.password={{configServerPassword}}" {{newimage}}
+      command: sudo docker run -d -p {{ports}} -p {{ports2}} --name embcweb -e "spring.profiles.active=amazon,request" -e "spring.cloud.config.password={{configServerPassword}}" {{newimage}}
