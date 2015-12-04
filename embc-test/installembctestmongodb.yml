@@ -6,10 +6,10 @@
    tasks:
 
     - name: Pull new image
-      command: sudo sh -c "sudo docker pull dockerfile/mongodb"
-      ignore_errors: True
+      command: sudo sh -c "sudo docker pull library/mongo"
+      
 
     - name: Launch new container
-      command: sudo docker run -d -p 27017:27017 --name mongodb dockerfile/mongodb
+      command: sudo docker run -d -p 27017:27017 --name mongodb library/mongo
 
 
