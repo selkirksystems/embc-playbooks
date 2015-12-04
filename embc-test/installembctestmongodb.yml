@@ -1,0 +1,15 @@
+---
+ - hosts: all
+   user: khaukaas
+   
+
+   tasks:
+
+    - name: Pull new image
+      command: sudo sh -c "sudo docker pull dockerfile/mongodb"
+      ignore_errors: True
+
+    - name: Launch new container
+      command: sudo docker run -d -p 27017:27017 --name mongodb dockerfile/mongodb
+
+
