@@ -1,0 +1,29 @@
+---
+ - hosts: all
+   user: khaukaas
+   
+
+   tasks:
+
+    - name: Pull new image
+      command: sudo sh -c "sudo docker pull {{newimage}}"
+      ignore_errors: True
+
+    - name: Stop old container
+      command: sudo sh -c "sudo docker stop $(sudo docker ps -a -q)"
+      register: result
+      ignore_errors: True
+
+    - name: Remove old container
+      command: sudo sh -c "sudo docker rm $(sudo docker ps -a -q)"
+      ignore_errors: True
+      when: result|success
+
+
+    - name: Remove old image
+      command: sudo sh -c "sudo docker rmi {{oldimage}}"
+      ignore_errors: True
+      when: result|success
+
+    - name: Launch new container
+      command: sudo sh -c "sudo docker run -d -h $(ifconfig eth0 | grep 'inet addr:' | cut '-d:' -f2 | awk '{print $1}') --name aircraftinventoryservice -p {{ports}} -p {{ports2}} -e "spring.cloud.config.password={{configServerPassword}}" -e "spring.profiles.active=amazon" {{newimage}}"
